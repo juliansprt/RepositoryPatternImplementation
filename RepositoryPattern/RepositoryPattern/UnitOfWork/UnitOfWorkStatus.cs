@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RepositoryPattern.UnitOfWork
 {
+    /// <summary>
+    /// Unit of work status
+    /// </summary>
     public enum UnitOfWorkStatus
     {
         NotStarted,

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace RepositoryPattern.UnitOfWork
 {
+    /// <summary>
+    /// Unit of work execution process
+    /// </summary>
     public class UnitOfWorkExecution
     {
         private string key;
@@ -19,8 +22,17 @@ namespace RepositoryPattern.UnitOfWork
             this.key = key;
         }
 
+        /// <summary>
+        /// Current exception
+        /// </summary>
         public Exception Exception { get; private set; }
 
+        /// <summary>
+        /// Begin a new Unit of work
+        /// </summary>
+        /// <param name="applicationDatabaseContext"></param>
+        /// <param name="useTransaction"></param>
+        /// <returns></returns>
         public UnitOfWork Begin(IApplicationDatabaseContext applicationDatabaseContext, bool useTransaction)
         {
             this.unitOfWork = new UnitOfWork(applicationDatabaseContext, useTransaction);
@@ -28,11 +40,18 @@ namespace RepositoryPattern.UnitOfWork
             return this.unitOfWork;
         }
 
+        /// <summary>
+        /// Callbac on end unit of work
+        /// </summary>
+        /// <param name="onEnd"></param>
         public void OnEnd(Action onEnd)
         {
             this.onEnd += onEnd;
         }
 
+        /// <summary>
+        /// Finalice Unit Of Work
+        /// </summary>
         public void End()
         {
             if (this.success)
@@ -42,6 +61,11 @@ namespace RepositoryPattern.UnitOfWork
             this.onEnd();
         }
 
+
+        /// <summary>
+        /// Capture the current exception
+        /// </summary>
+        /// <param name="ex"></param>
         public void HandleException(Exception ex)
         {
             this.success = false;

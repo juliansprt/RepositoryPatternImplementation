@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RepositoryPattern
 {
+    /// <summary>
+    /// Export attribute for strategy injection
+    /// </summary>
     public class ExportAttribute : Attribute
     {
         #region  Constructor
@@ -29,10 +32,22 @@ namespace RepositoryPattern
         #endregion
     }
 
+    /// <summary>
+    /// Instance strategy types
+    /// </summary>
     public enum InstanceType
     {
+        /// <summary>
+        /// Single instance for all request
+        /// </summary>
         SingleInstance,
+        /// <summary>
+        /// Instance per dependency
+        /// </summary>
         InstancePerDependency,
+        /// <summary>
+        /// Instance for each request
+        /// </summary>
         InstancePerRequest
     }
 }

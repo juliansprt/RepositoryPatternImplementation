@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RepositoryPattern.UnitOfWork
 {
+    /// <summary>
+    /// Work Context provider default implementation
+    /// </summary>
     [Export]
     public class WorkContextProvider : IWorkContextProvider
     {

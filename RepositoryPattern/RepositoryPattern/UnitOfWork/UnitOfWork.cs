@@ -2,6 +2,9 @@
 
 namespace RepositoryPattern.UnitOfWork
 {
+    /// <summary>
+    /// Unit of work implementation
+    /// </summary>
     public class UnitOfWork : IDisposable
     {
         private readonly IApplicationDatabaseContext applicationDatabaseContext;
@@ -18,11 +21,17 @@ namespace RepositoryPattern.UnitOfWork
 
         public UnitOfWorkStatus Status { get; private set; } = UnitOfWorkStatus.NotStarted;
 
+        /// <summary>
+        /// Cancel a request
+        /// </summary>
         public void Cancel()
         {
             this.canceled = true;
         }
 
+        /// <summary>
+        /// Begin a transaction into current Unit Work
+        /// </summary>
         public void Begin()
         {
             if (this.useTransaction)
@@ -30,6 +39,9 @@ namespace RepositoryPattern.UnitOfWork
             this.Status = UnitOfWorkStatus.Running;
         }
 
+        /// <summary>
+        /// Finalice a transaction
+        /// </summary>
         public void Success()
         {
             if(this.canceled)
@@ -51,6 +63,9 @@ namespace RepositoryPattern.UnitOfWork
 
         }
 
+        /// <summary>
+        /// Save changes of unit work
+        /// </summary>
         public virtual void CheckPoint()
         {
             if(this.useTransaction)
@@ -61,6 +76,10 @@ namespace RepositoryPattern.UnitOfWork
             }
         }
 
+        /// <summary>
+        /// Set error in current unit of work
+        /// </summary>
+        /// <param name="ex"></param>
         public void Fail(Exception ex)
         {
             if (this.useTransaction)
@@ -68,6 +87,10 @@ namespace RepositoryPattern.UnitOfWork
             this.Status = UnitOfWorkStatus.Failed;
         }
 
+        /// <summary>
+        /// On Sucess Callback
+        /// </summary>
+        /// <param name="onSuccess"></param>
         public void OnSuccess(Action onSuccess)
         {
             this.onSuccess = onSuccess;
